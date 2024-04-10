@@ -1,4 +1,4 @@
-package br.com.fiap.msprodutos.infra;
+package br.com.fiap.msprodutos.infra.handler;
 
 public final class MessageErrorHandler {
     private final String message;

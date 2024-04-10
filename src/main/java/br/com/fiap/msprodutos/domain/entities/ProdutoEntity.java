@@ -1,9 +1,8 @@
 package br.com.fiap.msprodutos.domain.entities;
 
 import br.com.fiap.msprodutos.domain.dto.ProdutoDtoResponse;
-import br.com.fiap.msprodutos.domain.expections.BusinessException;
+import br.com.fiap.msprodutos.domain.exceptions.BusinessException;
 import jakarta.persistence.*;
-
 
 @Table(name = "produtos")
 @Entity

@@ -1,4 +1,4 @@
-package br.com.fiap.msprodutos.domain.expections;
+package br.com.fiap.msprodutos.domain.exceptions;
 
 public class BusinessException extends Exception{
     public BusinessException(final String message){
