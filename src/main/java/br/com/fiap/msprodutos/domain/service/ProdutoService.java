@@ -1,6 +1,7 @@
 package br.com.fiap.msprodutos.domain.service;
 
-import br.com.fiap.msprodutos.domain.dto.ProdutoDto;
+import br.com.fiap.msprodutos.domain.dto.ProdutoDtoRequest;
+import br.com.fiap.msprodutos.domain.dto.ProdutoDtoResponse;
 import br.com.fiap.msprodutos.domain.entities.ProdutoEntity;
 import br.com.fiap.msprodutos.domain.expections.BusinessException;
 import br.com.fiap.msprodutos.domain.repositories.ProdutoRepository;
@@ -15,28 +16,25 @@ public class ProdutoService {
     @Autowired
     private ProdutoRepository produtoRepository;
 
-    public List<ProdutoDto> listarProdutos(){
+    public List<ProdutoDtoResponse> listarProdutos(){
         return produtoRepository.findAll().stream().map(ProdutoEntity::toDto).toList();
     }
 
-    public ProdutoDto buscarProdutoPorId(int id){
-        ProdutoEntity produtoEntity = produtoRepository.findById(id).orElse(null);
-        if(produtoEntity == null){
-            return null;
-        }
+    public ProdutoDtoResponse buscarProdutoPorId(int id) throws BusinessException {
+        ProdutoEntity produtoEntity = buscarProdutoEntity(id);
         return produtoEntity.toDto();
     }
 
-    public ProdutoDto cadastrarProduto(ProdutoDto produto) throws BusinessException {
+    public ProdutoDtoResponse cadastrarProduto(ProdutoDtoRequest produto) throws BusinessException {
+        ProdutoEntity produtoEntity = produtoRepository.findByNome(produto.nome());
+        if(produtoEntity != null){
+            throw new BusinessException("Já existe produto cadastrado com esse nome");
+        }
         return produtoRepository.save(produto.toEntity()).toDto();
     }
 
-    public ProdutoDto atualizarProduto(Integer id, ProdutoDto produtoDto) throws BusinessException {
-        ProdutoEntity produtoExistente = produtoRepository.findById(id).orElse(null);
-
-        if(produtoExistente == null){
-            throw new BusinessException("Produto não encontrado");
-        }
+    public ProdutoDtoResponse atualizarProduto(Integer id, ProdutoDtoRequest produtoDto) throws BusinessException {
+        ProdutoEntity produtoExistente = buscarProdutoEntity(id);
 
         ProdutoEntity produtoAtualizado = new ProdutoEntity(
                 produtoExistente.getId(),
@@ -48,13 +46,40 @@ public class ProdutoService {
         return produtoRepository.save(produtoAtualizado).toDto();
     }
 
-    public void ExcluirProduto(int id) throws BusinessException {
-        ProdutoEntity produtoExistente = produtoRepository.findById(id).orElse(null);
+    public void excluirProduto(int id) throws BusinessException {
+        buscarProdutoEntity(id);
+        produtoRepository.deleteById(id);
+    }
 
-        if(produtoExistente == null){
+    public ProdutoDtoResponse acrescentarEstoque(Integer id, int quantidade) throws BusinessException {
+        ProdutoEntity produto = buscarProdutoEntity(id);
+        ProdutoEntity produtoAtualizado = new ProdutoEntity(
+                produto.getId(),
+                produto.getNome(),
+                produto.getDescricao(),
+                produto.getQuantidadeEstoque() + quantidade,
+                produto.getPreco()
+        );
+        return produtoRepository.save(produtoAtualizado).toDto();
+    }
+
+    public ProdutoDtoResponse diminuirEstoque(Integer id, int quantidade) throws BusinessException {
+        ProdutoEntity produto = buscarProdutoEntity(id);
+        ProdutoEntity produtoAtualizado = new ProdutoEntity(
+                produto.getId(),
+                produto.getNome(),
+                produto.getDescricao(),
+                produto.getQuantidadeEstoque() - quantidade,
+                produto.getPreco()
+        );
+        return produtoRepository.save(produtoAtualizado).toDto();
+    }
+
+    private ProdutoEntity buscarProdutoEntity(int id) throws BusinessException {
+        ProdutoEntity produto = produtoRepository.findById(id).orElse(null);
+        if(produto == null){
             throw new BusinessException("Produto não encontrado");
         }
-
-        produtoRepository.deleteById(id);
+        return produto;
     }
 }

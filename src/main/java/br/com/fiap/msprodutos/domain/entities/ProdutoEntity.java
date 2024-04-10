@@ -1,6 +1,6 @@
 package br.com.fiap.msprodutos.domain.entities;
 
-import br.com.fiap.msprodutos.domain.dto.ProdutoDto;
+import br.com.fiap.msprodutos.domain.dto.ProdutoDtoResponse;
 import br.com.fiap.msprodutos.domain.expections.BusinessException;
 import jakarta.persistence.*;
 
@@ -36,8 +36,8 @@ public class ProdutoEntity {
         this.preco = preco;
     }
 
-    public ProdutoDto toDto() {
-        return new ProdutoDto(id, nome, descricao, quantidadeEstoque, preco);
+    public ProdutoDtoResponse toDto() {
+        return new ProdutoDtoResponse(id, nome, descricao, quantidadeEstoque, preco);
     }
 
     public int getId() {
