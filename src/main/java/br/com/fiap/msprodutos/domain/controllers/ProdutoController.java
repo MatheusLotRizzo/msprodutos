@@ -2,7 +2,7 @@ package br.com.fiap.msprodutos.domain.controllers;
 
 import br.com.fiap.msprodutos.domain.dto.ProdutoDtoRequest;
 import br.com.fiap.msprodutos.domain.exceptions.BusinessException;
-import br.com.fiap.msprodutos.domain.service.ProdutoService;
+import br.com.fiap.msprodutos.domain.services.ProdutoService;
 import br.com.fiap.msprodutos.infra.handler.MessageErrorHandler;
 import br.com.fiap.msprodutos.infra.swagger.annotations.ApiResponseSwaggerCreate;
 import br.com.fiap.msprodutos.infra.swagger.annotations.ApiResponseSwaggerNoContent;

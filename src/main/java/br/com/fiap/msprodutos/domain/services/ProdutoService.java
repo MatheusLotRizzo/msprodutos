@@ -1,4 +1,4 @@
-package br.com.fiap.msprodutos.domain.service;
+package br.com.fiap.msprodutos.domain.services;
 
 import br.com.fiap.msprodutos.domain.dto.ProdutoDtoRequest;
 import br.com.fiap.msprodutos.domain.dto.ProdutoDtoResponse;
