@@ -1,9 +1,9 @@
 package br.com.fiap.msprodutos.domain.services;
 
+import br.com.fiap.estrutura.exception.BusinessException;
 import br.com.fiap.msprodutos.domain.dto.ProdutoDtoRequest;
 import br.com.fiap.msprodutos.domain.dto.ProdutoDtoResponse;
 import br.com.fiap.msprodutos.domain.entities.ProdutoEntity;
-import br.com.fiap.msprodutos.domain.exceptions.BusinessException;
 import br.com.fiap.msprodutos.domain.repositories.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

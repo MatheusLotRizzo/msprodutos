@@ -1,9 +1,9 @@
 package br.com.fiap.msprodutos.domain.services;
 
+import br.com.fiap.estrutura.exception.BusinessException;
 import br.com.fiap.msprodutos.domain.dto.ProdutoDtoRequest;
 import br.com.fiap.msprodutos.domain.dto.ProdutoDtoResponse;
 import br.com.fiap.msprodutos.domain.entities.ProdutoEntity;
-import br.com.fiap.msprodutos.domain.exceptions.BusinessException;
 import br.com.fiap.msprodutos.domain.repositories.ProdutoRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

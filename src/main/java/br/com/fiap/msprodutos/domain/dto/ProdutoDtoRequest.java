@@ -1,7 +1,7 @@
 package br.com.fiap.msprodutos.domain.dto;
 
+import br.com.fiap.estrutura.exception.BusinessException;
 import br.com.fiap.msprodutos.domain.entities.ProdutoEntity;
-import br.com.fiap.msprodutos.domain.exceptions.BusinessException;
 
 public record ProdutoDtoRequest(
         String nome,
