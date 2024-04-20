@@ -101,4 +101,120 @@ class ProdutoControllerITTest {
         }
     }
 
+    @Nested
+    class atualizarProduto{
+        @Test
+        void deveAtualizarProduto() {
+            given()
+                    .contentType(ContentType.JSON)
+                    .pathParam("id", 2)
+                    .body(new ProdutoDtoRequest(
+                            "Produto Atualizado",
+                            "Descrição Atualizada",
+                            10,
+                            100.0)
+                    )
+                    .when()
+                        .put("/produtos/{id}")
+                    .then()
+                        .statusCode(HttpStatus.SC_OK)
+                    .body("nome", is("Produto Atualizado"));
+        }
+
+        @Test
+        void naoDeveAtualizarProdutoInexistente() {
+            given()
+                    .contentType(ContentType.JSON)
+                    .pathParam("id", 50000)
+                    .body(new ProdutoDtoRequest(
+                            "Produto Atualizado",
+                            "Descrição Atualizada",
+                            10,
+                            100.0)
+                    )
+                    .when()
+                    .put("/produtos/{id}")
+                    .then()
+                    .statusCode(HttpStatus.SC_BAD_REQUEST)
+                    .body("message", is("Produto não encontrado"));
+        }
+    }
+
+    @Nested
+    class excluirProduto{
+        @Test
+        void deveExcluirProduto() {
+            given()
+                    .pathParam("id", 3)
+                    .when()
+                        .delete("/produtos/{id}")
+                    .then()
+                        .statusCode(HttpStatus.SC_NO_CONTENT);
+        }
+
+        @Test
+        void naoDeveExcluirProdutoInexistente() {
+            given()
+                    .pathParam("id", 50000)
+                    .when()
+                    .delete("/produtos/{id}")
+                    .then()
+                    .statusCode(HttpStatus.SC_BAD_REQUEST)
+                    .body("message", is("Produto não encontrado"));
+        }
+    }
+
+    @Nested
+    class acrescentarEstoque{
+        @Test
+        void deveAcrescentarEstoque() {
+            given()
+                    .pathParam("id", 4)
+                    .pathParam("quantidade", 5)
+                    .when()
+                        .put("produtos/{id}/estoque/acrescentar/{quantidade}")
+                    .then()
+                        .statusCode(HttpStatus.SC_OK)
+                    .body("quantidadeEstoque", is(45));
+        }
+
+        @Test
+        void naoDeveAcrescentarEstoqueProdutoInexistente() {
+            given()
+                    .pathParam("id", 50000)
+                    .pathParam("quantidade", 5)
+                    .when()
+                        .put("produtos/{id}/estoque/acrescentar/{quantidade}")
+                    .then()
+                        .statusCode(HttpStatus.SC_BAD_REQUEST)
+                    .body("message", is("Produto não encontrado"));
+        }
+    }
+
+    @Nested
+    class diminuirEstoque{
+        @Test
+        void deveDiminuirEstoque() {
+            given()
+                    .pathParam("id", 5)
+                    .pathParam("quantidade", 5)
+                    .when()
+                        .put("produtos/{id}/estoque/diminuir/{quantidade}")
+                    .then()
+                        .statusCode(HttpStatus.SC_OK)
+                    .body("quantidadeEstoque", is(45));
+        }
+
+        @Test
+        void naoDeveDiminuirEstoqueProdutoInexistente() {
+            given()
+                    .pathParam("id", 50000)
+                    .pathParam("quantidade", 5)
+                    .when()
+                        .put("produtos/{id}/estoque/diminuir/{quantidade}")
+                    .then()
+                        .statusCode(HttpStatus.SC_BAD_REQUEST)
+                    .body("message", is("Produto não encontrado"));
+        }
+    }
 }
