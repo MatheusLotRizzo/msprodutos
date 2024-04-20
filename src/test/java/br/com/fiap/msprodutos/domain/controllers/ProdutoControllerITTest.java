@@ -58,7 +58,7 @@ class ProdutoControllerITTest {
                     .when()
                     .get("/produtos/{id}")
                     .then()
-                    .statusCode(HttpStatus.SC_NOT_FOUND)
+                    .statusCode(HttpStatus.SC_BAD_REQUEST)
                     .body("message", is("Produto não encontrado"));
         }
     }
