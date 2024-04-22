@@ -59,7 +59,7 @@ public class ProdutoEntity {
         return preco;
     }
 
-    private static void validacoesPadroes(String nome, String descricao, int quantidadeEstoque, double preco) throws BusinessException {
+    private void validacoesPadroes(String nome, String descricao, int quantidadeEstoque, double preco) throws BusinessException {
         if (nome == null || nome.isEmpty()) {
             throw new BusinessException("Nome do produto não pode ser nulo ou vazio");
         }
