@@ -4,7 +4,7 @@ import br.com.fiap.estrutura.exception.BusinessException;
 import br.com.fiap.msprodutos.domain.dto.ProdutoDtoResponse;
 import jakarta.persistence.*;
 
-@Table(name = "produtos")
+@Table(name = "produtos", uniqueConstraints={@UniqueConstraint(columnNames={"nome"})})
 @Entity
 public class ProdutoEntity {
 
